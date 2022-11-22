@@ -1,0 +1,211 @@
+﻿@using PrjWen.ViewModel
+@model List<credit>
+
+@{
+    ViewData["Title"] = "ShipperCors";
+}
+<div style="display:block;height:40px;"></div>
+
+<h1>信用卡</h1>
+<button id="buttonAdd" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addModal">
+    <i class="fas fa-plus-square"></i>
+</button>
+<table id="creditcard" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>信用卡流水號</th>
+            <th>信用卡公司名稱</th>
+            <th>信用卡卡號</th>
+            <th>信用卡使用狀態</th>
+            <th>編輯</th>
+            <th>刪除</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr data="@item.Cid信用卡流水號">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cid信用卡流水號)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cname信用卡公司名)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cnum信用卡號)
+                </td>
+                <td>
+
+                    @{
+                        string mystate;
+                        //Html.DisplayFor(modelItem => item.Cuse使用狀態);
+                        if (item.Cuse使用狀態 == true)
+                        { mystate = Html.DisplayName("使用中"); }
+                        else
+                        { mystate = Html.DisplayName("非使用中"); }                        
+                    }
+                    @mystate
+                </td>
+                <td>
+                    @*<input type="text" class="cidNum" value="@item.Cid信用卡流水號" />*@
+                    @*<a asp-action="Edit" asp-route-id="@item.Cid信用卡流水號" class="Edit btn btn-primary" data-toggle="modal" data-target="#EditModal"><i class="fa-solid fa-pen-nib"></i></a>*@
+
+                    <a asp-action="Edit" asp-route-id="@item.Cid信用卡流水號" class="Edit btn btn-primary"><i class="fa-solid fa-pen-nib"></i></a>
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.Cid信用卡流水號" class="Del btn btn-warning" data-toggle="modal" data-target="#myModel"><i class="fa-regular fa-trash-can"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<!-- DelModal -->
+<div class="modal fade text-dark" id="myModel" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>您好</h4>
+                <button class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>確定要移除此商品嗎?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal">關閉</button>
+                <button id="D" type="submit" class="btn btn-warning" data-dismiss="modal">移除</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 要送出刪除的表單 -->
+<form name="DelInfo" method="get" action="~/CreditCard/Delete" enctype="text/plain" id="Deleteform">
+    <input type="hidden" id="inputdelete" name="incid" />
+</form>
+
+<!-- Modal Add-->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="get" action="Create" enctype="text/plain" id="Createform">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">新增信用卡 <span></span></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="CompanyName">信用卡公司名稱</label>
+                        <input type="text" class="form-control" id="CompanyName" name="CompanyName"
+                               placeholder="名稱">
+                    </div>
+                    <div class="form-group">
+                        <label for="Num">信用卡卡號</label>
+                        <input type="text" class="form-control" id="Num" name="Num" placeholder="卡號">
+                    </div>
+                    @*<div class="form-group">
+                            <label for="CState">信用卡使用狀態</label>
+                            <input type="text" class="form-control" id="Cstate" name="Cstate" placeholder="狀態">
+                        </div>*@
+                    <label for="CState">信用卡使用狀態</label>
+                    <select name="Cstate" class="form-select" aria-label="Default select example">
+                        <option value="true">使用</option>
+                        <option value="false">不使用</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" value="送出" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<!-- #region ModalEdit -->
+@*<div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="Edit" enctype="text/plain" id="Editform">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">編輯信用卡 <span></span></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                            <div class="form-group">
+                                <label for="CompanyName">信用卡公司名稱</label>
+                                <input type="text" class="form-control" id="EditCompanyName" name="EditCompanyName"
+                                       placeholder="名稱" value="@item.Cname信用卡公司名">
+                            </div>
+                            <div class="form-group">
+                                <label for="Num">信用卡卡號</label>
+                                <input type="text" class="form-control" id="EditNum" name="EditNum" placeholder="卡號">
+
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" value="送出" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>*@
+
+@*<form name="EditInfo" action="~/CreditCard/Edit" enctype="text/plain" id="Editform">
+        <input type="hidden" id="Editid" name="id" />
+    </form>*@
+<!-- #endregion -->
+
+
+@section Scripts{
+    <script>
+        let Del = document.getElementsByClassName('Del')//自動長出的垃圾筒
+        let D = document.querySelector('#D')//出現要刪除的方塊，「移除」的按鈕
+        let inputdelete = document.getElementById('inputdelete')//隱藏欄位，放要刪除的信用卡id號碼,設定value
+        let deleteID = document.querySelector('#inputdelete')//隱藏欄位，放要刪除的信用卡id號碼
+        let Edit = document.getElementsByClassName('Edit')//編輯的Button
+        let Editid = document.getElementById('Editid')//隱藏欄位，找到id
+        let E = document.querySelector('#Editid')//隱藏欄位，給他值
+        let EditCompanyName = document.getElementById('EditCompanyName')
+        let EditNum = document.getElementById('EditNum')
+
+        for (let item of Del) {
+            item.addEventListener('click', evt => {
+                evt.preventDefault();
+                deleteID = $(event.currentTarget).parents('tr')[0].getAttribute('data');//取得信用卡流水號
+                console.log(deleteID)
+                inputdelete.setAttribute('value', deleteID)
+                console.log(inputdelete)
+                D.addEventListener('click', evt => {
+                    //item.closest("tr").remove()
+                    $('#Deleteform').submit();
+                })
+            })
+        }
+        @*for (let x of Edit) {
+            x.addEventListener('click',async evt => {
+                evt.preventDefault();
+                Editid = $(event.currentTarget).parents('tr')[0].getAttribute('data');//取得信用卡流水號
+                console.log(Editid)
+                E.setAttribute('value', Editid)//給隱藏欄位寫入信用卡的值
+                console.log(E)
+                $(EditInfo).submit();//將表單送出
+                let response = await fetch("@Url.Content("~/CreditCard/JsonEdit")" + `?id=${Editid}`)
+                let datas = await response.json()
+                console.log(datas)
+                EditCompanyName.setAttribute('value', datas[0]['cname'])
+
+
+
+            })
+        }*@
+
+    </script>
+
+}
