@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewData["Title"] = "practice";
+}
+
+<h1>practice</h1>
+<label Password/>
+<input type="text" id="idPwd" size="6" />
+<span id="idsp"></span><br/><br />
+<input type="button" id="idbut" value="確認密碼" onclick="checkPwd()" />
+
+@section Scripts{  
+<script>
+    let d = new Date(2020, 0, 0);
+    console.log(d);
+    function checkPwd() {
+        let thePwd = document.getElementById("idPwd")
+        //console.log(thePwd)
+        let thePwdVal = thePwd.value
+        //console.log(thePwdVal)
+        let sp = document.getElementById("idsp")
+        let thePwdValLen = thePwdVal.length
+        //console.log(thePwdValLen)
+        //密碼不得為空白、須大於等於6、判斷是否包含字母、數字、符號
+        let ch, flag1 = false, flag2 = false, flag3 = false
+        if (thePwdVal == "")
+            //sp.innerHTML = "不可為空白";
+        window.document.getElementById('idPwd').outerHTML = "不可空白請輸入，謝謝!";
+        else if (thePwdValLen >= 6) {
+           
+            for (var i = 0; i < thePwdValLen; i++) {
+                ch = thePwdVal.charAt(i).toUpperCase();
+                console.log(ch)
+                if (ch >= "A" && ch <= "Z")
+                    flag1 = true
+                else if (ch >= "0" && ch <= "9")
+                    flag2 = true
+                if (flag1 && flag2) break;
+            }
+            if (flag1 && flag2)
+                sp.innerHTML = "正確";
+            else
+                sp.innerHTML = "不正確";
+
+        } else {
+             sp.innerHTML = "密碼長度須大於6";
+        }
+    }
+</script>
+    
+}
+

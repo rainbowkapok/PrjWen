@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewData["Title"] = "practiceVueJs";
+}
+
+<h1>practiceVueJs</h1>
+<div id="APP">
+    {{message}}
+    {{score*0.8}}
+    <div v-if="loading">訊息載入錯誤</div>
+    <br />
+    <h3>你考幾分呢?</h3>
+    <input type="text" v-model="score" />
+    <div v-if="score>=60">及格了!</div>
+    <div v-else="score<60">再加油哦!</div>
+    <br />
+    <h3>v-model雙向資料綁定，輸入什麼秀什麼</h3>
+    <input type="text" v-model="myinput" />
+    {{myinput}}
+    <br />
+    <br />
+    <h3>v-for用回圈將陣列中的資料秀出來</h3>
+    <ul>
+        <li v-for="color in colors">
+            {{color}}
+        </li>
+    </ul>
+    <br />
+    <br />
+    <h3>陣列中代物件，取其中的值，用v-for呈現全部</h3>
+    <ul>
+        <li v-for="item in family">{{item.mon}}</li>
+    </ul>
+    <br />
+    <br />
+    <h3>練習v-on:click,有v-for 自動產生button</h3>
+    <input type="button" v-for="item in family" v-on:click="myfa(item.father)" value="family-father" />
+    <ul>
+        <li v-for="item in family" v-on:click="myfa(item.father)">{{item.father}}</li>
+    </ul>
+    <br />
+    <br />
+    <h3>請輸入待辦事項</h3>
+    <input type="text" placeholder="請輸入待辦事項"  v-model="newTodo" />
+    <input type="button" v-on:click="addTodo(newTodo)" value="按下去" />
+    <h4>事項列表</h4>
+    <ul>
+        <li v-for="todo in todos">
+            {{todo.content}}
+            -<a href="#" click.prevent="removeTodo(todo)">刪除</a>
+        </li>
+    </ul>
+    
+    <br />
+    <br />
+</div>
+
+@section Scripts{
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#APP',
+            data: {
+                message: 'HiHi!',
+                score: 80,
+                loading: true,
+                myinput: '你好，請輸入謝謝!',
+                colors: ['紅', '綠', '黃'],
+                family: [{ father: 'Tom', mon: 'Kitty' }, { father: 'David', mon: 'Judy' }],
+                todos: [],
+                newTodo:''
+            },
+            methods: {
+                myfa: function (father) {
+                    alert('家族成員爸爸名字:' + father);
+                },
+                addTodo: function (todo) {
+                    this.todos.push({ content: todo, completed: false });
+                },
+                removeTodo: function (todo) {
+                    this.todos.splice(this.todos.indexof(todo),1);
+                }
+            }
+            
+        });
+       
+    </script>
+}
+

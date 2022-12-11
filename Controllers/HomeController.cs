@@ -22,6 +22,14 @@ namespace PrjWen.Controllers
         {
             return View();
         }
+        public ActionResult practice() 
+        {
+            return View();
+        }
+        public ActionResult practiceVueJs()
+        {
+            return View();
+        }
 
         public IActionResult Privacy()
         {

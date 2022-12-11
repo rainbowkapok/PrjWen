@@ -44,7 +44,7 @@ namespace PrjWen.Controllers
                 }).ToList();
             return View(datas);
         }
-        [HttpGet]
+        [HttpPost]
         public IActionResult Create(string CompanyName, string Num,bool Cstate)
         {
             CreditCard信用卡 C = new CreditCard信用卡();
