@@ -30,7 +30,7 @@ namespace PrjWen.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=WenDB;Integrated Security=True");
             }
         }
@@ -77,19 +77,33 @@ namespace PrjWen.Models
 
                 entity.ToTable("Member會員");
 
+                entity.Property(e => e.Apikey)
+                    .HasColumnName("APIKey")
+                    .HasComment("以識別介接權限的GUID，APIKey需要提前申請");
+
                 entity.Property(e => e.Cid信用卡流水號).HasColumnName("CId信用卡流水號");
+
+                entity.Property(e => e.CreatedTime建立時間).HasColumnType("date");
 
                 entity.Property(e => e.Email信箱)
                     .IsRequired()
                     .HasMaxLength(50);
 
+                entity.Property(e => e.Gender性別).HasComment("0:女，1:男");
+
                 entity.Property(e => e.Name會員名稱)
                     .IsRequired()
                     .HasMaxLength(10);
 
+                entity.Property(e => e.Password密碼)
+                    .IsRequired()
+                    .HasMaxLength(20);
+
                 entity.Property(e => e.Phone手機號碼)
                     .IsRequired()
                     .HasMaxLength(30);
+
+                entity.Property(e => e.SessionId).HasComment("SessionId	字串GUID，由作業的發起方產生，以識別此次介接動作的一連串流程");
 
                 entity.HasOne(d => d.Cid信用卡流水號Navigation)
                     .WithMany(p => p.Member會員s)

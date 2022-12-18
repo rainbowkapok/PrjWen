@@ -30,6 +30,8 @@ namespace PrjWen
                 options.UseSqlServer(Configuration.GetConnectionString("WenDBConnection"));
             });
             services.AddControllersWithViews();
+            services.AddSession();
+            services.AddAuthentication();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,6 +40,7 @@ namespace PrjWen
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                
             }
             else
             {
@@ -47,10 +50,10 @@ namespace PrjWen
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseAuthorization();
+            app.UseSession();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {
