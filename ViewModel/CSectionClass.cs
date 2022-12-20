@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PrjWen.ViewModel
 {
-    public class CSeactionClass
+    public class CSectionClass
     {
         public static readonly string LoginUser = "LoginUser";
     }

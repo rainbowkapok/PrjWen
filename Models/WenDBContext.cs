@@ -19,6 +19,7 @@ namespace PrjWen.Models
 
         public virtual DbSet<Category商品類別> Category商品類別s { get; set; }
         public virtual DbSet<CreditCard信用卡> CreditCard信用卡s { get; set; }
+        public virtual DbSet<Log記錄檔> Log記錄檔s { get; set; }
         public virtual DbSet<Member會員> Member會員s { get; set; }
         public virtual DbSet<OrderStatus訂單狀態> OrderStatus訂單狀態s { get; set; }
         public virtual DbSet<Order訂單總表> Order訂單總表s { get; set; }
@@ -30,8 +31,8 @@ namespace PrjWen.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=WenDB;Integrated Security=True");
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=WenDB;encrypt=false;Integrated Security=True");
             }
         }
 
@@ -69,6 +70,19 @@ namespace PrjWen.Models
                     .HasColumnName("CNum信用卡號");
 
                 entity.Property(e => e.Cuse使用狀態).HasColumnName("CUse使用狀態");
+            });
+
+            modelBuilder.Entity<Log記錄檔>(entity =>
+            {
+                entity.ToTable("Log記錄檔");
+
+                entity.Property(e => e.CreatedTime建立時間).HasColumnType("date");
+
+                entity.Property(e => e.Level級別).HasMaxLength(50);
+
+                entity.Property(e => e.LoggerName登入者).HasMaxLength(50);
+
+                entity.Property(e => e.SysName系統名稱).HasMaxLength(50);
             });
 
             modelBuilder.Entity<Member會員>(entity =>
