@@ -32,7 +32,7 @@ namespace PrjWen.Models
             if (!optionsBuilder.IsConfigured)
             {
 //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=WenDB;encrypt=false;Integrated Security=True");
+                optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=WenDB;encrypt=false;Integrated Security=True;encrypt=false;");
             }
         }
 
@@ -80,9 +80,16 @@ namespace PrjWen.Models
 
                 entity.Property(e => e.Level級別).HasMaxLength(50);
 
-                entity.Property(e => e.LoggerName登入者).HasMaxLength(50);
+                entity.Property(e => e.SessionId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("SessionID");
 
-                entity.Property(e => e.SysName系統名稱).HasMaxLength(50);
+                entity.Property(e => e.SysAction)
+                    .HasMaxLength(10)
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.System).HasMaxLength(50);
             });
 
             modelBuilder.Entity<Member會員>(entity =>

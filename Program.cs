@@ -46,7 +46,7 @@ namespace PrjWen
                     .ConfigureLogging(logging =>
                     {
                         logging.ClearProviders();
-                        logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Debug);
+                        logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
                     })
                     .UseNLog();
                 
