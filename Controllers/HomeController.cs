@@ -31,12 +31,12 @@ namespace PrjWen.Controllers
             {
                 return RedirectToAction("Login");
             }
-            _logger.LogTrace("Loggin Level=0 (Trace)");
-            _logger.LogDebug("Loggin Level=1 (Debug)");
-            _logger.LogInformation("Loggin Level=2 (Information)");
-            _logger.LogWarning("Loggin Level=3 (Warning)");
-            _logger.LogError("Loggin Level=4 (Error)");
-            _logger.LogCritical("Loggin Level=5 (Critical)");
+            //_logger.LogTrace("Loggin Level=0 (Trace)");
+            //_logger.LogDebug("Loggin Level=1 (Debug)");
+            //_logger.LogInformation("Loggin Level=2 (Information)");
+            //_logger.LogWarning("Loggin Level=3 (Warning)");
+            //_logger.LogError("Loggin Level=4 (Error)");
+            //_logger.LogCritical("Loggin Level=5 (Critical)");
             return View();
         }
         public ActionResult Login()
@@ -55,7 +55,7 @@ namespace PrjWen.Controllers
                 {
                     string JoinUser= JsonSerializer.Serialize(Member);
                     HttpContext.Session.SetString(CSectionClass.LoginUser,JoinUser);
-                    _logger.LogInformation("success"+"登入時間:"+DateTime.Now.ToShortDateString());
+                    _logger.LogInformation("success"+"登入時間:"+DateTime.Now.ToString()+Member.Name會員名稱);
                     return RedirectToAction("Index");
                 }
             }

@@ -15,8 +15,22 @@ namespace PrjWen
     {
         public static void Main(string[] args)
         {            
-            NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
-            CreateWebHostBuilder(args).Build().Run();
+           var logger=NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+            try
+            {
+                logger.Debug("init main");
+                CreateWebHostBuilder(args).Build().Run();
+            }
+            catch (Exception exception)
+            {
+                logger.Error(exception, "停止程式因為有例外狀況");
+                throw;
+            }
+            finally
+            {
+                NLog.LogManager.Shutdown();
+            }
+            //CreateWebHostBuilder(args).Build().Run();
         }
 
         //public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -32,7 +46,7 @@ namespace PrjWen
                     .ConfigureLogging(logging =>
                     {
                         logging.ClearProviders();
-                        logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+                        logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Debug);
                     })
                     .UseNLog();
                 
